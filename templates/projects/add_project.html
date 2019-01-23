@@ -1,0 +1,66 @@
+{% extends "base_template.html" %} {% block content %}
+
+<div class="row">
+  <div class="col text-center"><h1>Add project page</h1></div>
+</div>
+
+<div class="row">
+  <div class="col">
+    <form method="post">
+      <div class="row">
+        <div class="col">Publish? <input type="checkbox" name="publish" /></div>
+      </div>
+
+      <input
+        id="title-input"
+        type="text"
+        autocomplete="off"
+        name="title"
+        class="form-control text-center"
+        placeholder="Project title"
+        aria-label="Project title"
+        required
+      />
+
+      <!-- tags -->
+      <input
+        id="title-input"
+        type="text"
+        autocomplete="off"
+        name="tags"
+        class="form-control text-center"
+        placeholder="Enter tags here..."
+        aria-label="Tags"
+      />
+
+      <textarea
+        id="content-input"
+        autocomplete="off"
+        name="content"
+        class="form-control"
+        aria-label="With textarea"
+        required
+      ></textarea>
+
+      <div class="row">
+        <div class="col">
+          <a href="">
+            <button type="button" class="btn btn-primary btn-block btn-lg">
+              Back
+            </button>
+          </a>
+        </div>
+
+        <div class="col">
+          <button type="submit" class="btn btn-success btn-block btn-lg">
+            Post
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<hr />
+
+{% endblock %}

@@ -73,8 +73,12 @@ def create_database(db_name):
             username TEXT,
             title TEXT,
             description TEXT,
-            datetime_created TEXT,
+            git_link TEXT,
+            live_link TEXT,
+            datetime_started TEXT,
+            datetime_finsihed TEXT,
             datetime_updated TEXT,
+            datetime_published TEXT,
             FOREIGN KEY(username) REFERENCES user(username) ON DELETE CASCADE
         );
         '''
