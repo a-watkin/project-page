@@ -135,10 +135,28 @@ class Project(object):
 
         self.db.make_sanitized_query(query_string, data)
 
+    def get_projects(self):
+        return self.db.get_query_as_list(
+            '''
+            SELECT * FROM project
+            '''
+        )
+
+    def get_project(self, project_id):
+        return self.db.get_query_as_list(
+            '''
+            SELECT * FROM project WHERE project_id = {}
+            '''.format(project_id)
+        )
+
 
 if __name__ == "__main__":
     p = Project()
 
-    print(p)
+    # print(p)
     # print(p.get_post(6558864814))
-    p.create_project()
+    # p.create_project()
+
+    # print(p.get_projects())
+
+    # print(p.get_project(2031595445))
