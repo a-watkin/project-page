@@ -116,9 +116,9 @@ class Project(object):
 
     def create_project(self):
         query_string = '''
-            INSERT INTO project (project_id, username, title, description, git_link, live_link, datetime_started, datetime_finished, datetime_updated, datetime_published)
-            VALUES (?,?,?,?,?,?,?,?,?,?)
-            '''
+                INSERT INTO project (project_id, username, title, description, git_link, live_link, datetime_started, datetime_finished, datetime_updated, datetime_published)
+                VALUES (?,?,?,?,?,?,?,?,?,?)
+                '''
 
         data = (
             self.project_id,
