@@ -25,6 +25,13 @@ def get_all_projects():
     return render_template('projects/projects.html', projects=project_data)
 
 
+@project_blueprint.route('/<int:project_id>', methods=['GET'])
+def get_project(project_id):
+    p = Project()
+    project_data = p.get_project(project_id)
+    return render_template('projects/project.html', projects=project_data)
+
+
 @project_blueprint.route('/new', methods=['GET', 'POST'])
 def new_project():
     if request.method == 'GET':
@@ -51,3 +58,13 @@ def new_project():
         p.create_project()
 
         return redirect(url_for('projects.get_all_projects'))
+
+
+@project_blueprint.route('/edit/<int:project_id>', methods=['GET'])
+def edit_project(project_id):
+    pass
+
+
+@project_blueprint.route('/delete/<int:project_id>', methods=['GET'])
+def delete_project(project_id):
+    pass

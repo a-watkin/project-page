@@ -7,6 +7,16 @@
 .project-title a {
   color: black;
 }
+
+.project-link {
+  margin-top: 2%;
+  color: black;
+}
+
+.project-link a {
+  color: black;
+}
+
 body {
   /* background: #292d2c; */
   color: #7a7a7a;
