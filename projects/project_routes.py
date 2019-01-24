@@ -29,16 +29,11 @@ def new_project():
         return render_template('projects/add_project.html')
 
     if request.method == 'POST':
-        title = request.form['title']
         # this will be handled by tag call
         tags = request.form['tags']
         # split only if key exists
         if tags:
             tags = tags.split(',')
-
-        description = request.form['description']
-        git_link = request.form['git_link']
-        live_link = request.form['live_link']
 
         # this will be handled by another class
         screenshots = request.form['screenshots']
@@ -46,17 +41,8 @@ def new_project():
         if screenshots:
             screenshots = screenshots.split(',')
 
-        print(
-            title,
-            tags,
-            description,
-            git_link,
-            live_link,
-            screenshots
-        )
-
+        # make new project object
         project_data = request.form.to_dict()
-
         p = Project(project_data)
 
         print(p)
