@@ -6,7 +6,7 @@
 
 <div class="row">
   <div class="col">
-    <form method="post">
+    <form method="POST">
       <div class="row">
         <div class="col">Publish? <input type="checkbox" name="publish" /></div>
       </div>
@@ -25,6 +25,7 @@
       <hr />
 
       <!-- tags -->
+      <label for="tags">Enter comma separated tags below:</label>
       <input
         id="title-input"
         type="text"
@@ -36,7 +37,7 @@
       />
 
       <hr />
-
+      <label for="description">Enter a description below:</label>
       <textarea
         id="content-input"
         autocomplete="off"
@@ -51,9 +52,9 @@
       <!-- github link -->
       <input
         id="title-input"
-        type="text"
+        type="url"
         autocomplete="off"
-        name="github-link"
+        name="git_link"
         class="form-control text-center"
         placeholder="Enter github link here..."
         aria-label="Tags"
@@ -63,10 +64,10 @@
 
       <!-- live_link -->
       <input
+        type="url"
         id="title-input"
-        type="text"
         autocomplete="off"
-        name="live-link"
+        name="live_link"
         class="form-control text-center"
         placeholder="Enter live link here..."
         aria-label="Tags"
@@ -74,16 +75,15 @@
 
       <hr />
 
+      <label for="screenshots">Enter screenshot URLs below:</label>
       <textarea
+        type="url"
         id="content-input"
         autocomplete="off"
-        name="description"
+        name="screenshots"
         class="form-control"
         aria-label="With textarea"
-        required
-      >
-Enter screenshots URLs here separated by commas</textarea
-      >
+      ></textarea>
 
       <hr />
 

@@ -37,6 +37,8 @@ class Project(object):
         self.db = Database()
 
         # really not ideal but i need some deault values beyond just None for a lot of these
+
+        # i could make this a loop with setdefault, but I would still need a list of keys i expect in the object and i don't mind it being explicit, it doesn't quite work for the first two either
         if 'project_id' not in self.__dict__:
             # print('No post_id, so adding it')
             self.project_id = get_id()
@@ -56,9 +58,15 @@ class Project(object):
         if 'git_link' not in self.__dict__:
             # print('No content, so adding it')
             self.git_link = None
+        # there may not be a git version of some projects
+        elif len(self.__dict__['git_link']) == 0:
+            self.git_link = None
 
         if 'live_link' not in self.__dict__:
             # print('No content, so adding it')
+            self.live_link = None
+        # there may not be a live version of some projects
+        elif len(self.__dict__['live_link']) == 0:
             self.live_link = None
 
         if 'datetime_started' not in self.__dict__:
@@ -88,6 +96,7 @@ class Project(object):
         title: {}\n
         description: {}\n
         git_link: {}\n
+        live_link: {}\n
         datetime_started: {}\n
         datetime_finished: {}\n
         datetime_updated: {}\n
