@@ -1,0 +1,14 @@
+.project-title {
+  font-family: "Raleway", sans-serif;
+  padding: 0.5em;
+  color: black;
+}
+
+.project-title a {
+  color: black;
+}
+body {
+  /* background: #292d2c; */
+  color: #7a7a7a;
+  font-family: "Open Sans", sans-serif;
+}
