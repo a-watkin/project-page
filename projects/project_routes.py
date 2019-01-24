@@ -19,7 +19,7 @@ project_blueprint = Blueprint('projects', __name__)
 
 
 @project_blueprint.route('/', methods=['GET'])
-def get_all_projects():
+def get_projects():
     p = Project()
     project_data = p.get_projects()
     return render_template('projects/projects.html', projects=project_data)
@@ -57,7 +57,7 @@ def new_project():
         print(p)
         p.create_project()
 
-        return redirect(url_for('projects.get_all_projects'))
+        return redirect(url_for('projects.get_projects'))
 
 
 @project_blueprint.route('/edit/<int:project_id>', methods=['GET'])

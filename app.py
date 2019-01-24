@@ -2,6 +2,7 @@ import subprocess
 from flask import Flask
 
 from projects.project_routes import project_blueprint
+from user.user_routes import user_blueprint
 
 app = Flask(__name__)
 # Markdown(app)
@@ -10,8 +11,7 @@ app = Flask(__name__)
 # static_folder = 'blog/static'
 
 app.register_blueprint(project_blueprint, url_prefix="/projects")
-# app.register_blueprint(user_blueprint, url_prefix="/user")
-
+app.register_blueprint(user_blueprint, url_prefix="/user")
 
 app.config.update(
     TESTING=True,
