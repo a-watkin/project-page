@@ -44,5 +44,5 @@ def new_project():
         # make new project object
         project_data = request.form.to_dict()
         p = Project(project_data)
-
         print(p)
+        p.create_project()
