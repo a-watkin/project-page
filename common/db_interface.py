@@ -4,7 +4,7 @@ import sqlite3
 
 class Database(object):
     def __init__(self):
-        self.db_name = 'minimal_viable_blog.db'
+        self.db_name = 'projects.db'
 
     @classmethod
     def get_placeholders(cls, num):

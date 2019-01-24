@@ -105,9 +105,31 @@ class Project(object):
             self.datetime_published
         )
 
+    def create_project(self):
+        query_string = '''
+            INSERT INTO project (project_id, username, title, description, git_link, live_link, datetime_started, datetime_finished, datetime_updated, datetime_published)
+            VALUES (?,?,?,?,?,?,?,?,?,?)
+            '''
+
+        data = (
+            self.project_id,
+            self.username,
+            self.title,
+            self.description,
+            self.git_link,
+            self.live_link,
+            self.datetime_started,
+            self.datetime_finished,
+            self.datetime_updated,
+            self.datetime_published
+        )
+
+        self.db.make_sanitized_query(query_string, data)
+
 
 if __name__ == "__main__":
     p = Project()
 
     print(p)
     # print(p.get_post(6558864814))
+    p.create_project()
