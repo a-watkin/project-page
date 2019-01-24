@@ -20,12 +20,15 @@ project_blueprint = Blueprint('projects', __name__)
 
 @project_blueprint.route('/', methods=['GET'])
 def test():
-    return 'meh'
+    p = Project()
+    project_data = p.get_projects()
+    return render_template('projects/projects.html', projects=project_data)
 
 
 @project_blueprint.route('/new', methods=['GET', 'POST'])
 def new_project():
     if request.method == 'GET':
+
         return render_template('projects/add_project.html')
 
     if request.method == 'POST':
