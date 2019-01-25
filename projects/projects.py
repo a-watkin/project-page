@@ -58,14 +58,15 @@ class Project(object):
         if 'git_link' not in self.__dict__:
             # print('No content, so adding it')
             self.git_link = None
-        # there may not be a git version of some projects
 
+        # there may not be a git version of some projects
         elif self.__dict__['git_link'] is not None and len(self.__dict__['git_link']) == 0:
             self.git_link = None
 
         if 'live_link' not in self.__dict__:
             # print('No content, so adding it')
             self.live_link = None
+
         # there may not be a live version of some projects
         elif self.__dict__['live_link'] is not None and len(self.__dict__['live_link']) == 0:
             self.live_link = None

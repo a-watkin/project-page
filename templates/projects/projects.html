@@ -39,7 +39,12 @@
 
 <div class="row text-center project-links">
   <div class="col project-link">
-    <a href="{{ project['git_link'] }}">
+    {% if project['live_link'] is none %}
+    <a href="{{ project['git_link'] }}" target="_blank" disabled></a>
+
+    {% else %}
+    <a href="{{ project['git_link'] }}" target="_blank">
+      {% endif %}
       <svg
         aria-label="screenshot"
         width="32"
@@ -59,7 +64,12 @@
   </div>
 
   <div class="col project-link">
-    <a href="{{ project['live_link'] }}">
+    {% if project['live_link'] is none %}
+    <a href="{{ project['git_link'] }}" target="_blank" disabled></a>
+
+    {% else %}
+    <a href="{{ project['git_link'] }}" target="_blank">
+      {% endif %}
       <svg
         id="i-external"
         viewBox="0 0 32 32"
