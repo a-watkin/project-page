@@ -33,6 +33,7 @@ def get_project(project_id):
 
 
 @project_blueprint.route('/new', methods=['GET', 'POST'])
+@login_required
 def new_project():
     if request.method == 'GET':
 
@@ -61,6 +62,7 @@ def new_project():
 
 
 @project_blueprint.route('/edit/<int:project_id>', methods=['GET', 'POST'])
+@login_required
 def edit_project(project_id):
     if request.method == 'GET':
         p = Project()
