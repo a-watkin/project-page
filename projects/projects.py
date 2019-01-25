@@ -59,14 +59,15 @@ class Project(object):
             # print('No content, so adding it')
             self.git_link = None
         # there may not be a git version of some projects
-        elif 'git_link' in self.__dict__ and len(self.__dict__['git_link']) == 0:
+
+        elif self.__dict__['git_link'] is not None and len(self.__dict__['git_link']) == 0:
             self.git_link = None
 
         if 'live_link' not in self.__dict__:
             # print('No content, so adding it')
             self.live_link = None
         # there may not be a live version of some projects
-        elif 'live_link' in self.__dict__ and len(self.__dict__['live_link']) == 0:
+        elif self.__dict__['live_link'] is not None and len(self.__dict__['live_link']) == 0:
             self.live_link = None
 
         if 'datetime_started' not in self.__dict__:
@@ -201,15 +202,40 @@ class Project(object):
             # remove the project from deleted project table
             project_to_restore.remove_deleted_project(project_id)
 
-    def get_deleted_project(self):
+    def get_deleted_projects(self):
         data = self.db.get_query_as_list(
             '''
-            SELECT * FROM deleted_project ORDER BY datetime_projected DESC
+            SELECT * FROM deleted_project ORDER BY datetime_published DESC
             '''
+        )
+
+        # data = self.db.get_rows('post')
+        return data
+
+    def get_deleted_project(self, project_id):
+        data = self.db.get_query_as_list(
+            '''
+            SELECT * FROM deleted_project WHERE project_id = {}
+            '''.format(project_id)
         )
 
         # data = self.db.get_rows('project')
         return data
+
+    def remove_deleted_project(self, project_id):
+        """
+        Remove a post from deleted_post table and check that it is gone.
+        """
+        self.db.make_query(
+            '''
+            DELETE FROM deleted_project WHERE project_id = "{}";
+            '''.format(project_id)
+        )
+
+        if self.get_deleted_project(project_id):
+            return False
+
+        return True
 
     def purge_deleted_project(self):
         self.db.make_query(

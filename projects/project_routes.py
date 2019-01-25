@@ -71,3 +71,27 @@ def delete_project(project_id):
     p = Project()
     p.remove_project(project_id)
     return redirect(url_for('projects.get_projects'))
+
+
+@project_blueprint.route('/deleted', methods=['GET', 'POST'])
+@login_required
+def deleted_projects():
+    p = Project()
+    deleted_projects = p.get_deleted_projects()
+    return render_template('projects/deleted_projects.html', projects=deleted_projects)
+
+
+@project_blueprint.route('/purge', methods=['GET'])
+@login_required
+def purge_deleted_projects():
+    p = Project()
+    p.purge_deleted_projects()
+    return redirect(url_for('projects.get_projects'))
+
+
+@project_blueprint.route('/restore/<int:project_id>', methods=['GET'])
+@login_required
+def restore_deleted_projects(project_id):
+    p = Project()
+    p.restore_project(project_id)
+    return redirect(url_for('projects.get_projects'))
