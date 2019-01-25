@@ -138,7 +138,7 @@ class Project(object):
     def get_projects(self):
         return self.db.get_query_as_list(
             '''
-            SELECT * FROM project
+            SELECT * FROM project ORDER BY datetime_started DESC
             '''
         )
 
@@ -148,6 +148,113 @@ class Project(object):
             SELECT * FROM project WHERE project_id = {}
             '''.format(project_id)
         )
+
+    def save_deleted_post(self):
+        query_string = '''
+                INSERT INTO deleted_project (project_id, username, title, description, git_link, live_link, datetime_started, datetime_finished, datetime_updated, datetime_published)
+                VALUES (?,?,?,?,?,?,?,?,?,?)
+            '''
+
+        data = (
+            self.project_id,
+            self.username,
+            self.title,
+            self.description,
+            self.git_link,
+            self.live_link,
+            self.datetime_started,
+            self.datetime_finished,
+            self.datetime_updated,
+            self.datetime_published
+        )
+
+        self.db.make_sanitized_query(query_string, data)
+
+    def remove_post(self, post_id):
+        post_data = self.get_post(post_id)
+
+        if post_data:
+            p = Post(post_data[0])
+            p.save_deleted_post()
+
+            self.db.make_query(
+                '''
+                DELETE FROM project WHERE project_id = {};
+                '''.format(post_id)
+            )
+
+            if self.get_post(post_id):
+                return True
+
+        return False
+
+    def restore_project(self, post_id):
+        # gets the post data
+        project = self.get_deleted_project(post_id)
+        # make a new Post object
+        if project:
+            project = project[0]
+            # New instance of Post using the data from the deleted_post
+            project_to_restore = Project(project)
+            # write the post to the post table
+            project_to_restore.create_project()
+            # remove the post from deleted post table
+            project_to_restore.remove_deleted_project(project_id)
+
+    def get_deleted_project(self):
+        data = self.db.get_query_as_list(
+            '''
+            SELECT * FROM deleted_project ORDER BY datetime_posted DESC
+            '''
+        )
+
+        # data = self.db.get_rows('post')
+        return data
+
+    def purge_deleted_project(self):
+        self.db.make_query(
+            '''
+            DELETE FROM deleted_project
+            '''
+        )
+
+        if self.get_deleted_project():
+            return False
+        return True
+
+    def get_and_set_project(self, project_id):
+        data = self.get_project(post_id)
+        if data:
+            return Project(data[0])
+
+    def update_project(self, project_id):
+        """
+        post_id shouldn't change.
+        """
+        if self.get_project(project_id):
+            query_string = '''
+                UPDATE project
+                SET title = ?, description = ?, git_link = ?, live_link = ?, datetime_started =?, datetime_finished = ?, datetime_updated = ?, datetime_published = ?
+                WHERE project_id = ?
+                '''
+
+            data = (
+                self.title,
+                self.description,
+                self.git_link,
+                self.live_link,
+                self.datetime_started,
+                self.datetime_finished,
+                self.datetime_updated,
+                self.datetime_published,
+                self.project_id
+            )
+
+            self.db.make_sanitized_query(query_string, data)
+
+            return True
+        else:
+            return False
 
 
 if __name__ == "__main__":

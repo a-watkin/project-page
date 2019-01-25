@@ -6,45 +6,6 @@
 <!-- loop over projects -->
 {% for project in projects %}
 
-<!-- check for session -->
-{% if session %}
-<div class="row text-left post-edit-info">
-  <!-- check if post is public -->
-  {% if project["datetime_published"] %}
-
-  <div class="col">
-    <h6 class="text-success">
-      Published: {{ project["datetime_published"][0:16] }}
-    </h6>
-  </div>
-
-  <!-- show if post is private -->
-  {% else %}
-  <div class="col">
-    <h6 class="text-danger">This project is not published</h6>
-  </div>
-  {% endif %}
-
-  <div class="col text-right">
-    <a
-      class="edit-link"
-      href="{{ url_for('projects.edit_project', project_id=project['project_id']) }}"
-    >
-      <i class="far fa-edit fa-1x"></i>
-    </a>
-
-    <a
-      class="edit-link"
-      href="{{ url_for('projects.delete_project', project_id=project['project_id']) }}"
-    >
-      <i class="far fa-trash-alt fa-1x"></i>
-    </a>
-  </div>
-</div>
-
-<!-- end session check -->
-{% endif %}
-
 <div class="row">
   <div class="col text-center project-title">
     <h1>
