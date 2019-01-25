@@ -2,9 +2,8 @@
 <!--  -->
 {% block content %}
 
-{{ project }}
+<!-- {{ project }} -->
 
-{{ project[0]["title"] }}
 <div class="row">
   <div class="col text-center"><h1>Edit project page</h1></div>
 </div>
@@ -12,16 +11,10 @@
 <div class="row">
   <div class="col">
     <form method="POST">
-      <div class="row">
-        <div class="col">Publish? <input type="checkbox" name="publish" /></div>
-      </div>
-
-      <input id="title-input" type="text" autocomplete="off" name="title"
-      class="form-control text-center" placeholder="Project title" value="{{
-        project[0]["title"]
-      }}" aria-label="Project title" required />
-
-      <hr />
+      <label for="tags">Enter a title below:</label> <input id="title-input"
+      type="text" autocomplete="off" name="title" class="form-control
+      text-center" placeholder="Project title" value="{{ project[0]["title"] }}"
+      aria-label="Project title" required />
 
       <!-- tags -->
       <label for="tags">Enter comma separated tags below:</label>
@@ -35,7 +28,6 @@
         aria-label="Tags"
       />
 
-      <hr />
       <label for="description">Enter a description below:</label>
       <textarea
         id="content-input"
@@ -47,9 +39,8 @@
         >{{ project[0]["description"] }}</textarea
       >
 
-      <hr />
-
       <!-- github link -->
+      <label for="git hub link">Enter a GitHub URLs below:</label>
       <input
         id="title-input"
         type="url"
@@ -61,9 +52,8 @@
         aria-label="Tags"
       />
 
-      <hr />
-
       <!-- live_link -->
+      <label for="live link">Enter a live URL below:</label>
       <input
         type="url"
         id="title-input"
@@ -86,6 +76,12 @@
         class="form-control"
         aria-label="With textarea"
       ></textarea>
+
+      <hr />
+
+      <div class="row">
+        <div class="col">Publish? <input type="checkbox" name="publish" /></div>
+      </div>
 
       <hr />
 
