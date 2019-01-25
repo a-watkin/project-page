@@ -84,6 +84,7 @@ def deleted_projects():
 @project_blueprint.route('/purge', methods=['GET'])
 @login_required
 def purge_deleted_projects():
+    print('GETTING HERE?\n')
     p = Project()
     p.purge_deleted_projects()
     return redirect(url_for('projects.get_projects'))

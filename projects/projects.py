@@ -237,14 +237,14 @@ class Project(object):
 
         return True
 
-    def purge_deleted_project(self):
+    def purge_deleted_projects(self):
         self.db.make_query(
             '''
             DELETE FROM deleted_project
             '''
         )
 
-        if self.get_deleted_project():
+        if self.get_deleted_projects():
             return False
         return True
 
