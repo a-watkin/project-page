@@ -13,8 +13,8 @@ except Exception as e:
     """
     Running as module.
     """
-    print('\npost running as a module, for testing\n')
-    print('post.py import problem ', e)
+    print('\nproject running as a module, for testing\n')
+    print('project.py import problem ', e)
     # adding the root directory of the projects
     print(os.getcwd(), '\n')
     sys.path.append(os.getcwd())
@@ -40,7 +40,7 @@ class Project(object):
 
         # i could make this a loop with setdefault, but I would still need a list of keys i expect in the object and i don't mind it being explicit, it doesn't quite work for the first two either
         if 'project_id' not in self.__dict__:
-            # print('No post_id, so adding it')
+            # print('No project_id, so adding it')
             self.project_id = get_id()
 
         if 'username' not in self.__dict__:
@@ -149,7 +149,7 @@ class Project(object):
             '''.format(project_id)
         )
 
-    def save_deleted_post(self):
+    def save_deleted_project(self):
         query_string = '''
                 INSERT INTO deleted_project (project_id, username, title, description, git_link, live_link, datetime_started, datetime_finished, datetime_updated, datetime_published)
                 VALUES (?,?,?,?,?,?,?,?,?,?)
@@ -170,45 +170,45 @@ class Project(object):
 
         self.db.make_sanitized_query(query_string, data)
 
-    def remove_post(self, post_id):
-        post_data = self.get_post(post_id)
+    def remove_project(self, project_id):
+        project_data = self.get_project(project_id)
 
-        if post_data:
-            p = Post(post_data[0])
-            p.save_deleted_post()
+        if project_data:
+            p = project(project_data[0])
+            p.save_deleted_project()
 
             self.db.make_query(
                 '''
                 DELETE FROM project WHERE project_id = {};
-                '''.format(post_id)
+                '''.format(project_id)
             )
 
-            if self.get_post(post_id):
+            if self.get_project(project_id):
                 return True
 
         return False
 
-    def restore_project(self, post_id):
-        # gets the post data
-        project = self.get_deleted_project(post_id)
-        # make a new Post object
+    def restore_project(self, project_id):
+        # gets the project data
+        project = self.get_deleted_project(project_id)
+        # make a new project object
         if project:
             project = project[0]
-            # New instance of Post using the data from the deleted_post
+            # New instance of project using the data from the deleted_project
             project_to_restore = Project(project)
-            # write the post to the post table
+            # write the project to the project table
             project_to_restore.create_project()
-            # remove the post from deleted post table
+            # remove the project from deleted project table
             project_to_restore.remove_deleted_project(project_id)
 
     def get_deleted_project(self):
         data = self.db.get_query_as_list(
             '''
-            SELECT * FROM deleted_project ORDER BY datetime_posted DESC
+            SELECT * FROM deleted_project ORDER BY datetime_projected DESC
             '''
         )
 
-        # data = self.db.get_rows('post')
+        # data = self.db.get_rows('project')
         return data
 
     def purge_deleted_project(self):
@@ -223,13 +223,13 @@ class Project(object):
         return True
 
     def get_and_set_project(self, project_id):
-        data = self.get_project(post_id)
+        data = self.get_project(project_id)
         if data:
             return Project(data[0])
 
     def update_project(self, project_id):
         """
-        post_id shouldn't change.
+        project_id shouldn't change.
         """
         if self.get_project(project_id):
             query_string = '''
@@ -261,7 +261,7 @@ if __name__ == "__main__":
     p = Project()
 
     # print(p)
-    # print(p.get_post(6558864814))
+    # print(p.get_project(6558864814))
     # p.create_project()
 
     # print(p.get_projects())
