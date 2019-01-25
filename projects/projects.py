@@ -59,15 +59,15 @@ class Project(object):
             # print('No content, so adding it')
             self.git_link = None
         # there may not be a git version of some projects
-        elif len(self.__dict__['git_link']) == 0:
-            self.git_link = None
+        # elif len(self.__dict__['git_link']) == 0:
+        #     self.git_link = None
 
         if 'live_link' not in self.__dict__:
             # print('No content, so adding it')
             self.live_link = None
         # there may not be a live version of some projects
-        elif len(self.__dict__['live_link']) == 0:
-            self.live_link = None
+        # elif len(self.__dict__['live_link']) == 0:
+        #     self.live_link = None
 
         if 'datetime_started' not in self.__dict__:
             # print('No datetime_posted, so adding it')
@@ -174,7 +174,7 @@ class Project(object):
         project_data = self.get_project(project_id)
 
         if project_data:
-            p = project(project_data[0])
+            p = Project(project_data[0])
             p.save_deleted_project()
 
             self.db.make_query(
@@ -224,7 +224,11 @@ class Project(object):
 
     def get_and_set_project(self, project_id):
         data = self.get_project(project_id)
+        print(data[0])
         if data:
+            # p = Project(data[0])
+            # print(p)
+
             return Project(data[0])
 
     def update_project(self, project_id):
@@ -261,7 +265,7 @@ if __name__ == "__main__":
     p = Project()
 
     # print(p)
-    # print(p.get_project(6558864814))
+    print(p.get_and_set_project(7651738052))
     # p.create_project()
 
     # print(p.get_projects())

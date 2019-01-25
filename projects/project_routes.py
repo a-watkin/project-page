@@ -1,19 +1,19 @@
 import os
 import sys
+import datetime
 
 from flask import Blueprint, jsonify, request, render_template, redirect, url_for
 
 
-from .projects import Project
+try:
+    from .projects import Project
+    from .common.utils import login_required
+except Exception as e:
+    print('project routes import error', print(sys.path))
+    print('\n', os.getcwd(), '\n')
+    from .projects import Project
+    from common.utils import login_required
 
-# try:
-#     from .blog.post import Post
-#     from .tag.tag import Tag
-#     from .common.utils import login_required
-# except Exception as e:
-#     print('post routes import error', print(sys.path))
-#     print('\n', os.getcwd(), '\n')
-#     from projects import Project
 
 project_blueprint = Blueprint('projects', __name__)
 
@@ -65,6 +65,9 @@ def edit_project(project_id):
     pass
 
 
-@project_blueprint.route('/delete/<int:project_id>', methods=['GET'])
+@project_blueprint.route('/delete/<int:project_id>', methods=['GET', 'POST'])
+@login_required
 def delete_project(project_id):
-    pass
+    p = Project()
+    p.remove_project(project_id)
+    return redirect(url_for('projects.get_projects'))

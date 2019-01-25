@@ -86,6 +86,24 @@ def create_database(db_name):
 
     cursor.execute(
         '''
+        CREATE TABLE IF NOT EXISTS deleted_project(
+            project_id INT PRIMARY KEY NOT NULL UNIQUE,
+            username TEXT,
+            title TEXT,
+            description TEXT,
+            git_link TEXT,
+            live_link TEXT,
+            datetime_started TEXT,
+            datetime_finished TEXT,
+            datetime_updated TEXT,
+            datetime_published TEXT,
+            FOREIGN KEY(username) REFERENCES user(username) ON DELETE CASCADE
+        );
+        '''
+    )
+
+    cursor.execute(
+        '''
         CREATE TABLE IF NOT EXISTS project_tag(
             project_id INT references project(project_id) ON UPDATE CASCADE,
             tag_name TEXT references tag(tag_name) ON UPDATE CASCADE,
