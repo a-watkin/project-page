@@ -62,7 +62,11 @@ def new_project():
 
 @project_blueprint.route('/edit/<int:project_id>', methods=['GET'])
 def edit_project(project_id):
-    pass
+    if request.method == 'GET':
+        p = Project()
+        project = p.get_project(project_id)
+        return render_template('projects/edit_project.html', project=project)
+    return 'hello from edit project {}'.format(project_id)
 
 
 @project_blueprint.route('/delete/<int:project_id>', methods=['GET', 'POST'])

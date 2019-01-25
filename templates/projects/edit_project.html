@@ -1,0 +1,115 @@
+{% extends "base_template.html" %}
+<!--  -->
+{% block content %}
+
+{{ project }}
+
+{{ project[0]["title"] }}
+<div class="row">
+  <div class="col text-center"><h1>Edit project page</h1></div>
+</div>
+
+<div class="row">
+  <div class="col">
+    <form method="POST">
+      <div class="row">
+        <div class="col">Publish? <input type="checkbox" name="publish" /></div>
+      </div>
+
+      <input id="title-input" type="text" autocomplete="off" name="title"
+      class="form-control text-center" placeholder="Project title" value="{{
+        project[0]["title"]
+      }}" aria-label="Project title" required />
+
+      <hr />
+
+      <!-- tags -->
+      <label for="tags">Enter comma separated tags below:</label>
+      <input
+        id="title-input"
+        type="text"
+        autocomplete="off"
+        name="tags"
+        class="form-control text-center"
+        placeholder="Enter tags here..."
+        aria-label="Tags"
+      />
+
+      <hr />
+      <label for="description">Enter a description below:</label>
+      <textarea
+        id="content-input"
+        autocomplete="off"
+        name="description"
+        class="form-control"
+        aria-label="With textarea"
+        required
+        >{{ project[0]["description"] }}</textarea
+      >
+
+      <hr />
+
+      <!-- github link -->
+      <input
+        id="title-input"
+        type="url"
+        autocomplete="off"
+        name="git_link"
+        value="{{ project[0]['git_link'] }}"
+        class="form-control text-center"
+        placeholder="Enter github link here..."
+        aria-label="Tags"
+      />
+
+      <hr />
+
+      <!-- live_link -->
+      <input
+        type="url"
+        id="title-input"
+        autocomplete="off"
+        name="live_link"
+        value="{{ project[0]['live_link'] }}"
+        class="form-control text-center"
+        placeholder="Enter live link here..."
+        aria-label="Tags"
+      />
+
+      <hr />
+
+      <label for="screenshots">Enter screenshot URLs below:</label>
+      <textarea
+        type="url"
+        id="content-input"
+        autocomplete="off"
+        name="screenshots"
+        class="form-control"
+        aria-label="With textarea"
+      ></textarea>
+
+      <hr />
+
+      <div class="row">
+        <div class="col">
+          <a
+            href="{{url_for('projects.get_project', project_id=project[0]['project_id'])}}"
+          >
+            <button type="button" class="btn btn-primary btn-block btn-lg">
+              Back
+            </button>
+          </a>
+        </div>
+
+        <div class="col">
+          <button type="submit" class="btn btn-success btn-block btn-lg">
+            Post
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<hr />
+
+{% endblock %}
