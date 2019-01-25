@@ -60,12 +60,22 @@ def new_project():
         return redirect(url_for('projects.get_projects'))
 
 
-@project_blueprint.route('/edit/<int:project_id>', methods=['GET'])
+@project_blueprint.route('/edit/<int:project_id>', methods=['GET', 'POST'])
 def edit_project(project_id):
     if request.method == 'GET':
         p = Project()
         project = p.get_project(project_id)
         return render_template('projects/edit_project.html', project=project)
+    if request.method == 'POST':
+        project_data = request.form.to_dict()
+        # add the porject_id to the dict
+        project_data['project_id'] = project_id
+        # make a new Project object with the dict data
+        p = Project(project_data)
+        # update the data in the db
+        p.update_project()
+        return redirect(url_for('projects.get_project', project_id=project_id))
+
     return 'hello from edit project {}'.format(project_id)
 
 
@@ -74,6 +84,7 @@ def edit_project(project_id):
 def delete_project(project_id):
     p = Project()
     p.remove_project(project_id)
+    print(p)
     return redirect(url_for('projects.get_projects'))
 
 

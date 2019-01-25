@@ -257,11 +257,11 @@ class Project(object):
 
             return Project(data[0])
 
-    def update_project(self, project_id):
+    def update_project(self):
         """
         project_id shouldn't change.
         """
-        if self.get_project(project_id):
+        if self.get_project(self.project_id):
             query_string = '''
                 UPDATE project
                 SET title = ?, description = ?, git_link = ?, live_link = ?, datetime_started =?, datetime_finished = ?, datetime_updated = ?, datetime_published = ?
