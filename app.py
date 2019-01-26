@@ -3,6 +3,7 @@ from flask import Flask
 
 from projects.project_routes import project_blueprint
 from user.user_routes import user_blueprint
+from projects.project_tag_routes import project_tag_blueprint
 
 from flask import Flask, render_template
 
@@ -14,6 +15,7 @@ app = Flask(__name__)
 
 app.register_blueprint(project_blueprint, url_prefix="/projects")
 app.register_blueprint(user_blueprint, url_prefix="/user")
+app.register_blueprint(project_tag_blueprint, url_prefix="/projects/tag")
 
 app.config.update(
     TESTING=True,

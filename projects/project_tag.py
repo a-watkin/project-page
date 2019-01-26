@@ -467,23 +467,23 @@ class ProjectTag(object):
 
         return tag_data
 
-    def count_posts_by_tag(self, tag_name):
+    def count_projects_by_tag(self, tag_name):
         count = self.db.get_query_as_list(
             '''
-            select count(post_id) from post
-            join post_tag using(post_id)
+            select count(project_id) from project
+            join project_tag using(project_id)
             where tag_name = '{}'
             '''.format(tag_name)
         )
 
         if count:
-            return count[0]['count(post_id)']
+            return count[0]['count(project_id)']
 
     def remove_orphaned_tags(self):
         tags = self.get_all_tag_names()
 
         for tag in tags:
-            if self.count_posts_by_tag(tag) < 1:
+            if self.count_projects_by_tag(tag) < 1:
                 print(tag, ' needs to be removed')
 
                 self.db.make_query(
