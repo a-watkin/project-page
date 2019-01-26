@@ -124,6 +124,13 @@ class ProjectTag(object):
                 where photo.photo_id={}
             '''.format(entity_id)
 
+        if entity_name == 'project':
+            query_string = '''
+                select project_tag.tag_name from project
+                join project_tag on(project_tag.project_id=project.project_id)
+                where project.project_id={}
+            '''.format(entity_id)
+
         print('query_string\n', query_string)
 
         # so an array of tags would be ok
@@ -510,8 +517,11 @@ class ProjectTag(object):
 if __name__ == "__main__":
     t = ProjectTag()
 
-    t.add_tag('black')
-    print(t.get_all_tag_names())
+    # t.add_tag('black')
+    # print(t.get_all_tag_names())
 
-    t.add_tag_to_project(1358212041, 'black')
+    # t.add_tag_to_project(1358212041, 'black')
+
+    print(t.get_entity_tags('project', 1358212041))
+
     # print(t.remove_orphaned_tags())
