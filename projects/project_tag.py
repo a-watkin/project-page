@@ -477,9 +477,41 @@ class ProjectTag(object):
                     '''.format(tag)
                 )
 
+    def add_tag(self, tag_name, username='a'):
+        query_string = '''
+            INSERT INTO tag (tag_name, username)
+            VALUES (?, ?)
+            '''
+
+        data = (
+            tag_name,
+            username
+        )
+
+        self.db.make_sanitized_query(query_string, data)
+
+    def add_tag_to_project(self, project_id, tag_name):
+        if tag_name not in self.get_all_tag_names():
+            self.add_tag(tag_name)
+
+        query_string = '''
+            INSERT INTO project_tag (project_id, tag_name)
+            VALUES (?, ?)
+            '''
+
+        data = (
+            project_id,
+            tag_name
+        )
+
+        self.db.make_sanitized_query(query_string, data)
+
 
 if __name__ == "__main__":
     t = ProjectTag()
 
+    t.add_tag('black')
     print(t.get_all_tag_names())
+
+    t.add_tag_to_project(1358212041, 'black')
     # print(t.remove_orphaned_tags())
