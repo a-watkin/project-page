@@ -123,10 +123,10 @@
 
   <div class="col project-link">
     {% if project['live_link'] is none %}
-    <a href="{{ project['git_link'] }}" target="_blank" disabled></a>
+    <a href="{{ project['live_link'] }}" target="_blank" disabled></a>
 
     {% else %}
-    <a href="{{ project['git_link'] }}" target="_blank">
+    <a href="{{ project['live_link'] }}" target="_blank">
       {% endif %}
       <svg
         id="i-external"
