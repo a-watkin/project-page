@@ -13,7 +13,7 @@ except Exception as e:
     print('\n', os.getcwd(), '\n')
     from .projects import Project
     from common.utils import login_required
-    from project_tag import ProjectTag
+    from projects.project_tag import ProjectTag
 
 
 project_blueprint = Blueprint('projects', __name__)

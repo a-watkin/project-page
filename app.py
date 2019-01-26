@@ -4,6 +4,8 @@ from flask import Flask
 from projects.project_routes import project_blueprint
 from user.user_routes import user_blueprint
 
+from flask import Flask, render_template
+
 app = Flask(__name__)
 # Markdown(app)
 
@@ -17,6 +19,12 @@ app.config.update(
     TESTING=True,
     SECRET_KEY='whyohwhy'
 )
+
+
+@app.route('/', methods=['GET'])
+def test():
+    return render_template('home.html')
+
 
 if __name__ == '__main__':
     export_settings = [
