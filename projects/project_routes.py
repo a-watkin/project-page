@@ -50,8 +50,11 @@ def new_project():
         tags = request.form['tags']
         # split only if key exists
         if tags:
-
             tags = tags.split(',')
+            pt = ProjectTag()
+            for tag in tags:
+                tag = tag.strip()
+                pt.add_tag_to_project(p.project_id, tag)
 
         # this will be handled by another class
         screenshots = request.form['screenshots']
