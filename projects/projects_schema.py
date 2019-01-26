@@ -49,6 +49,8 @@ def create_database(db_name):
             tag_name TEXT NOT NULL UNIQUE, 
             username TEXT NOT NULL,
             posts INT,
+            photos INT,
+            projects INT,
             PRIMARY KEY (tag_name, username)
             FOREIGN KEY(username) REFERENCES user(username) ON DELETE CASCADE
         );
