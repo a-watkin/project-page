@@ -8,19 +8,19 @@ try:
     """
     from common.utils import get_id
     from common.db_interface import Database
-    from tag.tag import Tag
+    from projects.project_tag import Tag
 except Exception as e:
     """
     Running as module.
     """
-    print('\nproject running as a module, for testing\n')
-    print('project.py import problem ', e)
-    # adding the root directory of the projects
-    print(os.getcwd(), '\n')
-    sys.path.append(os.getcwd())
-    print('added to path ', sys.path)
+    print('Import problem ', e)
+    sys.path.append('/home/a/projects/project-page/')
+    print(sys.path)
     from common.utils import get_id
     from common.db_interface import Database
+    from project_tag import ProjectTag
+
+    # from .common.db_interface import Database
 
 
 class Project(object):
@@ -138,11 +138,21 @@ class Project(object):
         self.db.make_sanitized_query(query_string, data)
 
     def get_projects(self):
-        return self.db.get_query_as_list(
+        data = self.db.get_query_as_list(
             '''
             SELECT * FROM project ORDER BY datetime_started DESC
             '''
         )
+
+        pt = ProjectTag()
+        for project in data:
+            tag_data = pt.get_entity_tags('project', project['project_id'])
+
+            if tag_data:
+                project['tags'] = tag_data
+                h_tag_list = pt.entity_tag_list(project['project_id'])
+
+        return data
 
     def get_project(self, project_id):
         return self.db.get_query_as_list(
@@ -291,10 +301,7 @@ class Project(object):
 if __name__ == "__main__":
     p = Project()
 
-    # print(p)
-    print(p.get_and_set_project(7651738052))
-    # p.create_project()
+    data = p.get_projects()
 
-    # print(p.get_projects())
-
-    # print(p.get_project(2031595445))
+    for blah in data:
+        print('\n', blah)

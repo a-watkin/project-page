@@ -4,7 +4,12 @@ import sqlite3
 
 class Database(object):
     def __init__(self):
-        self.db_name = 'projects.db'
+        print(os.getcwd())
+        # for testing...because the path is all wrong for some reason
+        if 'project.db' not in os.listdir(os.getcwd()):
+            self.db_name = "/home/a/projects/project-page/projects.db"
+        else:
+            self.db_name = 'projects.db'
 
     @classmethod
     def get_placeholders(cls, num):
