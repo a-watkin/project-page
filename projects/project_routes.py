@@ -127,4 +127,6 @@ def get_project_by_tag(tag_name):
     t = ProjectTag()
     projects = t.get_entity_by_tag('project', tag_name)
 
+    print(projects)
+
     return render_template('projects/projects.html', projects=projects), 200

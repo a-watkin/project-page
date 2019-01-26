@@ -379,6 +379,14 @@ class ProjectTag(object):
                 ORDER BY datetime_posted DESC
             '''.format(tag_name)
 
+        if entity == 'project':
+            query_string = '''
+                SELECT * FROM project
+                JOIN project_tag USING(project_id)
+                WHERE tag_name = "{}"
+                ORDER BY datetime_published DESC
+            '''.format(tag_name)
+
         tag_data = self.db.get_query_as_list(query_string)
 
         for data in tag_data:
