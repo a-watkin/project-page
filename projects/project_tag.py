@@ -16,7 +16,7 @@ except Exception as e:
     print('\npost running as a module, for testing\n')
     print('post.py import problem ', e)
     # adding the root directory of the projects
-    sys.path.append('/home/a/projects/flask-mvb')
+    sys.path.append(os.getcwd())
     print('added to path ', sys.path)
     from common.utils import get_id
     from common.db_interface import Database
