@@ -6,6 +6,8 @@
 <!-- loop over projects -->
 {% for project in projects %}
 
+<!-- <h1>{{ project }}</h1> -->
+
 <!-- check for session -->
 {% if session %}
 <div class="row text-left post-edit-info">
@@ -68,7 +70,24 @@
 <div class="row">
   <div class="col">
     <h3>Tags</h3>
-    <p>Put tags of technology used here</p>
+    <!-- check for tags -->
+    {% if project['tags'] %}
+    <!-- loop over tags -->
+    {% for tag in project['tags'] %}
+    <a href="{{ url_for('projects.get_project_by_tag', tag_name=tag["tag_name"]) }}">
+      <button type="button" class="btn btn-outline-success tag-spacing">
+        {{ tag["human_readable_tag"] }}
+      </button>
+    </a>
+    <!-- end loop -->
+    {% endfor %}
+    <!--  -->
+    {% else %}
+    
+    <p>No tags for this project.</p>
+    
+    <!-- -->
+    {% endif %}
   </div>
 </div>
 

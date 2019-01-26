@@ -155,11 +155,21 @@ class Project(object):
         return data
 
     def get_project(self, project_id):
-        return self.db.get_query_as_list(
+        data = self.db.get_query_as_list(
             '''
             SELECT * FROM project WHERE project_id = {}
             '''.format(project_id)
         )
+
+        pt = ProjectTag()
+        for project in data:
+            tag_data = pt.get_entity_tags('project', project['project_id'])
+
+            if tag_data:
+                project['tags'] = tag_data
+                h_tag_list = pt.entity_tag_list(project['project_id'])
+
+        return data
 
     def save_deleted_project(self):
         query_string = '''
