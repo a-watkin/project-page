@@ -91,13 +91,13 @@ class ProjectTag(object):
 
         return tags
 
-    def entity_tag_list(self, post_id):
+    def entity_tag_list(self, project_id):
         tag_data = self.db.get_query_as_list(
             '''
-            SELECT tag_name FROM post_tag 
-            WHERE post_id = {}
+            SELECT tag_name FROM project_tag 
+            WHERE project_id = {}
             ORDER BY tag_name
-            '''.format(post_id)
+            '''.format(project_id)
         )
 
         tags = []
@@ -395,55 +395,33 @@ class ProjectTag(object):
 
         return tag_data
 
-    def remove_post_tags(self, post_id):
+    def remove_project_tags(self, post_id):
         self.db.make_query(
             '''
-            DELETE FROM post_tag WHERE post_id = {}
+            DELETE FROM project_tag WHERE project_id = {}
             '''.format(post_id)
         )
-
-    def add_tags_to_post(self, post_id, tags):
-        current_tags = self.get_all_tag_names()
-        # list of tags already assocaited with a post
-        post_tags = self.entity_tag_list(post_id)
-
-        # delete all current tags belonging to the post
-        if len(post_tags) > 0:
-            self.remove_post_tags(post_id)
-
-            # If the tag is not in the tag table
-        for tag in tags:
-            tag = tag.strip()
-            if tag not in current_tags:
-                print('inserting tag ', tag)
-                self.insert_tag(tag)
-                self.add_to_post_tag(post_id, tag)
-
-            # If the tag is in the tag table
-            elif tag in current_tags:
-                self.add_to_post_tag(post_id, tag)
 
     def insert_tag(self, tag):
         self.db.make_query(
             '''
-        insert into tag (tag_name, username, posts)
-        values ("{}", "{}", {})
+        insert into tag (tag_name, username)
+        values ("{}", "{}")
         '''.format(
                 tag,
-                'a',
-                1
+                'a'
             )
         )
 
-    def add_to_post_tag(self, post_id, tag_name):
-        print('add_to_post_tag', post_id, tag_name)
+    def add_to_project_tag(self, project_id, tag_name):
+        print('add_to_post_tag', project_id, tag_name)
         query_string = '''
-            INSERT INTO post_tag (post_id, tag_name)
+            INSERT INTO project_tag (project_id, tag_name)
             VALUES (?, ?)
             '''
 
         data = (
-            post_id,
+            project_id,
             tag_name
         )
 
@@ -520,6 +498,28 @@ class ProjectTag(object):
         )
 
         self.db.make_sanitized_query(query_string, data)
+
+    def add_tags_to_project(self, project_id, tags):
+        current_tags = self.get_all_tag_names()
+        # list of tags already assocaited with a post
+        project_tag = self.entity_tag_list(project_id)
+
+        # delete all current tags belonging to the post
+        if len(project_tag) > 0:
+            project_id
+            self.remove_project_tags(project_id)
+
+            # If the tag is not in the tag table
+        for tag in tags:
+            tag = tag.strip()
+            if tag not in current_tags:
+                print('inserting tag ', tag)
+                self.insert_tag(tag)
+                self.add_to_project_tag(project_id, tag)
+
+            # If the tag is in the tag table
+            elif tag in current_tags:
+                self.add_to_project_tag(project_id, tag)
 
 
 if __name__ == "__main__":

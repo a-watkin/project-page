@@ -17,16 +17,20 @@
       aria-label="Project title" required />
 
       <!-- tags -->
-      <label for="tags">Enter comma separated tags below:</label>
-      <input
-        id="title-input"
-        type="text"
-        autocomplete="off"
-        name="tags"
-        class="form-control text-center"
-        placeholder="Enter tags here..."
-        aria-label="Tags"
-      />
+      <label for="tags">Enter comma separated tags below:</label> <input
+      id="title-input" type="text" autocomplete="off" name="tags"
+      class="form-control text-center" {% if project[0]['tags'] %} {% for tag in
+      project[0]["human_readable_tags"] %} value="{{ project[0]["human_readable_tags"]|join(", ")
+
+
+
+
+
+
+
+
+      }}" {% endfor %} {% else %} placeholder="Enter tags here..." {% endif %}
+      aria-label="Tags" />
 
       <label for="description">Enter a description below:</label>
       <textarea
@@ -40,30 +44,18 @@
       >
 
       <!-- github link -->
-      <label for="git hub link">Enter a GitHub URLs below:</label>
-      <input
-        id="title-input"
-        type="url"
-        autocomplete="off"
-        name="git_link"
-        value="{{ project[0]['git_link'] }}"
-        class="form-control text-center"
-        placeholder="Enter github link here..."
-        aria-label="Tags"
-      />
+      <label for="git hub link">Enter a GitHub URLs below:</label> <input
+      id="title-input" type="url" autocomplete="off" name="git_link" {% if
+      project[0]['git_link'] %} value="{{ project[0]["git_link"] }}"{% endif %}
+      class="form-control text-center" placeholder="Enter github link here..."
+      aria-label="Tags" />
 
       <!-- live_link -->
-      <label for="live link">Enter a live URL below:</label>
-      <input
-        type="url"
-        id="title-input"
-        autocomplete="off"
-        name="live_link"
-        value="{{ project[0]['live_link'] }}"
-        class="form-control text-center"
-        placeholder="Enter live link here..."
-        aria-label="Tags"
-      />
+      <label for="live link">Enter a live URL below:</label> <input type="url"
+      id="title-input" autocomplete="off" name="live_link" {% if
+      project[0]['live_link'] %} value="{{ project[0]["live_link"] }}" {% endif
+      %} class="form-control text-center" placeholder="Enter live link here..."
+      aria-label="Tags" />
 
       <hr />
 

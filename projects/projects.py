@@ -18,7 +18,7 @@ except Exception as e:
     print(sys.path)
     from common.utils import get_id
     from common.db_interface import Database
-    from .project.project_tag import ProjectTag
+    from project_tag import ProjectTag
 
     # from .common.db_interface import Database
 
@@ -168,6 +168,7 @@ class Project(object):
             if tag_data:
                 project['tags'] = tag_data
                 h_tag_list = pt.entity_tag_list(project['project_id'])
+                data[0]['human_readable_tags'] = h_tag_list
 
         return data
 
@@ -311,7 +312,9 @@ class Project(object):
 if __name__ == "__main__":
     p = Project()
 
-    data = p.get_projects()
+    # data = p.get_projects()
 
-    for blah in data:
-        print('\n', blah)
+    # for blah in data:
+    #     print('\n', blah)
+
+    print(p.get_project(2914297460))

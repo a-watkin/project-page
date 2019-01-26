@@ -83,6 +83,18 @@ def edit_project(project_id):
         p = Project(project_data)
         # update the data in the db
         p.update_project()
+
+        if request.form['tags']:
+            tags = request.form['tags']
+            tags_data = tags.split(',')
+            pt = ProjectTag()
+            pt.add_tags_to_project(p.project_id, tags_data)
+
+        if p.get_project(p.project_id):
+            return redirect(url_for('projects.edit_project', project_id=p.project_id))
+        else:
+            return 'Oh no something went wrong :(', 404
+
         return redirect(url_for('projects.get_project', project_id=project_id))
 
     return 'hello from edit project {}'.format(project_id)
