@@ -11,6 +11,7 @@ try:
 except Exception as e:
     print('project routes import error', print(sys.path))
     print('\n', os.getcwd(), '\n')
+
     from .projects import Project
     from common.utils import login_required
     from projects.project_tag import ProjectTag
@@ -119,3 +120,11 @@ def restore_deleted_projects(project_id):
     p = Project()
     p.restore_project(project_id)
     return redirect(url_for('projects.get_projects'))
+
+
+@project_blueprint.route('/<string:tag_name>', methods=['GET'])
+def get_project_by_tag(tag_name):
+    t = ProjectTag()
+    projects = t.get_entity_by_tag('project', tag_name)
+
+    return render_template('projects/projects.html', projects=projects), 200

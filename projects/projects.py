@@ -8,7 +8,7 @@ try:
     """
     from common.utils import get_id
     from common.db_interface import Database
-    from projects.project_tag import Tag
+    from projects.project_tag import ProjectTag
 except Exception as e:
     """
     Running as module.
@@ -18,7 +18,7 @@ except Exception as e:
     print(sys.path)
     from common.utils import get_id
     from common.db_interface import Database
-    from project_tag import ProjectTag
+    from .project.project_tag import ProjectTag
 
     # from .common.db_interface import Database
 
