@@ -7,6 +7,8 @@ class Database(object):
         print(os.getcwd())
         # for testing...because the path is all wrong for some reason
         if 'project.db' not in os.listdir(os.getcwd()):
+            print('getting here?', os.getcwd(),
+                  os.listdir(os.getcwd()))
             self.db_name = "/home/a/projects/project-page/projects.db"
         else:
             self.db_name = 'projects.db'
