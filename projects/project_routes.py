@@ -13,6 +13,7 @@ except Exception as e:
     print('\n', os.getcwd(), '\n')
     from .projects import Project
     from common.utils import login_required
+    from project_tag import ProjectTag
 
 
 project_blueprint = Blueprint('projects', __name__)
@@ -40,10 +41,16 @@ def new_project():
         return render_template('projects/add_project.html')
 
     if request.method == 'POST':
+
+        # make new project object
+        project_data = request.form.to_dict()
+        p = Project(project_data)
+
         # this will be handled by tag call
         tags = request.form['tags']
         # split only if key exists
         if tags:
+
             tags = tags.split(',')
 
         # this will be handled by another class
@@ -52,10 +59,6 @@ def new_project():
         if screenshots:
             screenshots = screenshots.split(',')
 
-        # make new project object
-        project_data = request.form.to_dict()
-        p = Project(project_data)
-        print(p)
         p.create_project()
 
         return redirect(url_for('projects.get_projects'))
