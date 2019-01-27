@@ -47,6 +47,10 @@ def new_project():
         project_data = request.form.to_dict()
         p = Project(project_data)
 
+        if 'publish' in request.form:
+            publish = datetime.datetime.now()
+            p.datetime_published = publish
+
         # this will be handled by tag call
         tags = request.form['tags']
         # split only if key exists
@@ -81,6 +85,11 @@ def edit_project(project_id):
         project_data['project_id'] = project_id
         # make a new Project object with the dict data
         p = Project(project_data)
+
+        if 'publish' in request.form:
+            publish = datetime.datetime.now()
+            p.datetime_published = publish
+
         # update the data in the db
         p.update_project()
 
