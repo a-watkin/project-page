@@ -29,6 +29,9 @@
 
 
 
+
+
+
       }}" {% endfor %} {% else %} placeholder="Enter tags here..." {% endif %}
       aria-label="Tags" />
 
@@ -72,7 +75,10 @@
       <hr />
 
       <div class="row">
-        <div class="col">Publish? <input type="checkbox" name="publish" /></div>
+        <div class="col">
+          Publish? <input type="checkbox" name="publish" {% if
+          project[0]['datetime_published'] %} checked {% endif %} />
+        </div>
       </div>
 
       <hr />
