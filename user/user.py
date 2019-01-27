@@ -1,28 +1,40 @@
+
+
 import os
 import sys
 
 try:
-    from .blog_db import Database
-
     from .password_util import PasswordUtil
 except Exception as e:
-    print('import problem ', e)
-
+    print('import problem, ', e)
     sys.path.append(os.getcwd())
     from common.db_interface import Database
-
     from common.password_util import PasswordUtil
 
 
 class User(object):
-    def __init__(self, username, password=None, _id=None):
+    def __init__(self, username, password=None, user_id=None):
         self.username = username
+        self.user_id = '9604217@N03'
         self.password = password
-        self.user_id = None
         # init database
         self.db = Database()
 
     # check if username exists
+
+    def __str__(self):
+        return """
+        A user: \n
+        username: {}\n
+        user_id: {}\n
+        password: {}\n
+        using db: {}\n
+        """.format(
+            self.username,
+            self.user_id,
+            self.password,
+            self.db.db_name
+        )
 
     def check_for_username(self):
         """
@@ -39,9 +51,9 @@ class User(object):
         """
         db_resp = self.db.get_row('user', 'username', self.username)
 
-        # print(db_resp)
+        print(db_resp)
         if db_resp:
-            return db_resp[0]['hash']
+            return db_resp[0]['hash_value']
         # changed here because the db no longer returns a tuple
         # return db_resp[2]
 
@@ -56,7 +68,7 @@ class User(object):
         self.db.make_query(
             '''
             UPDATE user 
-            SET hash = "{}"
+            SET hash_value = "{}"
             WHERE username = "{}"
             '''.format(hased_password, self.username)
         )
@@ -72,9 +84,9 @@ class User(object):
         """
         self.db.make_query(
             '''
-            INSERT INTO user (username)
-            VALUES ("{}")
-            '''.format(self.username)
+            INSERT INTO user (username, user_id)
+            VALUES ("{}", "{}")
+            '''.format(self.username, self.user_id)
         )
 
         self.insert_hased_password(self.password)
@@ -82,6 +94,7 @@ class User(object):
 
 def main():
     u = User('a', 'a')
+    print(u)
     # hased password has been inserted
     # print(u.get_hashed_password('a'))
 
