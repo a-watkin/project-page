@@ -22,16 +22,6 @@
       class="form-control text-center" {% if project[0]['tags'] %} {% for tag in
       project[0]["human_readable_tags"] %} value="{{ project[0]["human_readable_tags"]|join(", ")
 
-
-
-
-
-
-
-
-
-
-
       }}" {% endfor %} {% else %} placeholder="Enter tags here..." {% endif %}
       aria-label="Tags" />
 
